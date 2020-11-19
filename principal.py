@@ -7,22 +7,24 @@ nivel = int(input("Ingrese la cantidad de cifras con las que quiere jugar (3,4 o
 lista = []
 listav = []
 
-b.write(nombre + ",")
+b.write("\n" + nombre + ",")
 b.write(str(nivel) + ",")
 
+#Genera un número aleatorio
 def generar_Numero():
     while len(lista) < nivel:
         k = randint(0,9)
         if (k not in lista):
             lista.append(k)
-    print (lista)
-        
+    print(lista)
+
+#Valida si el número ingresado tiene números repetidos  
 def validar(numero):
     for n in numero:
         if (n not in listav):
             listav.append(n)
 
-
+#Valida cuantas fijas y cuantas picas se hallaron
 def picas_y_fijas():
     global f
     global p
@@ -69,7 +71,7 @@ for h in range(15):
     
     if(f == nivel):
         print("¡¡FELICITACIONES!!   ¡¡¡¡Ganaste!!!!")
-        b.write(str(h) + "\n")
+        b.write(str(h))
         break
     if h > 14:
         print("Perdiste!!!")
@@ -77,12 +79,17 @@ for h in range(15):
 b.close()
 
 b = open("PicasyFijas.txt", "r")
-
+ganador = []
 for lineas in b.readlines():
     elementos = [str(x) for x in lineas.split(",")]
-    if elementos[1] == str(nivel):
-        q = elementos[-1]
-        n = elementos[0]
-        print(n + " con un numero de intentos de" + q)
-        
-        
+    if (elementos[1] == str(nivel)):
+        c = int(elementos[-1])
+        ganador.append(c)
+b.close
+print(min(ganador))
+b = open("PicasyFijas.txt", "r")
+for linea in b.readlines():
+    elemento = [str(x) for x in linea.split(",")]
+    if ((elemento[1] == str(nivel)) and (int(elemento[-1]) == min(ganador))):
+        print("El mejor jugador en " + str(nivel) + " cifras, es " + elemento[0] + " con " + elemento[-1] + " intentos") 
+b.close()
